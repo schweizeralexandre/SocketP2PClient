@@ -29,14 +29,13 @@ public class Server{
 		
 		ArrayList<Client> clients = new ArrayList<Client>() ;
 		ArrayList<String> files = new ArrayList<String>() ;
-		ArrayList<Thread> acceptClients = new ArrayList<Thread>() ;
+		ArrayList<AcceptClient> acceptClients = new ArrayList<AcceptClient>() ;
 		
 		ServerSocket serverSocket ;
 		Socket clientSocket ;
-		Thread clientThread ;
+		String clientName = null ;
+		AcceptClient clientThread ;
 		
-		PrintWriter pout = null ;
-		BufferedReader buff = null ;
 		
 		try {
 			
@@ -50,7 +49,7 @@ public class Server{
 			 *  AlexandreSchweizer: Accept every incoming socket connection
 			 */
 			
-			int i = 0 ;
+			int i = 1 ;
 			while(true) {
 				
 				/**
@@ -63,8 +62,8 @@ public class Server{
 				 *  AlexandreSchweizer: Then we create and start the client thread
 				 */
 				
-				clientThread = new Thread(new AcceptClient(clientSocket, i, acceptClients)) ;
-				clientThread.start() ;	
+				clientThread = new AcceptClient(clientSocket, clients, clientName, i, acceptClients,files) ;
+				clientThread.start() ;	 
 				
 				/**
 				 *  AlexandreSchweizer: ClientThread is added to the thread acceptClients 
